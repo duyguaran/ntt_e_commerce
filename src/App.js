@@ -13,15 +13,9 @@ import { getCardData } from './feautures/productsReducer.js';
 
 
 function App() {
-   const dispatch = useDispatch()
-  useEffect(() => {
-   dispatch( getCardData())
-    
-  },[])
-
   return (
     <div>
-   
+  
       <Header />
       <NavigationBar />
       <SliderBar />
