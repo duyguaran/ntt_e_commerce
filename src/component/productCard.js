@@ -4,8 +4,10 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getProducts } from "../feautures/productsSlice";
 
+
 const ProductCard = () => {
   const [products, setProducts] = useState([]);
+  const [likedProducts, setLikedProducts] = useState([]);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -17,6 +19,14 @@ const ProductCard = () => {
         console.log(error);
       });
   }, [dispatch]);
+
+  const handleLike = (id) => {
+    if (!likedProducts.includes(id)) {
+      setLikedProducts([...likedProducts, id]);
+    } else {
+      setLikedProducts(likedProducts.filter((likedId) => likedId !== id));
+    }
+  };
 
   return (
     <div className="row">
@@ -31,8 +41,9 @@ const ProductCard = () => {
                 position: "absolute",
                 top: 10,
                 right: 10,
-                color: "white",
+                color: likedProducts.includes(product.id) ? "red" : "white",
               }}
+              onClick={() => handleLike(product.id)}
             >
               <FaHeart size={20} />
             </div>
