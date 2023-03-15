@@ -6,7 +6,6 @@ import ProductCard from "./component/productCard";
 import SliderBar from "./component/slider";
 import ContentTitle from "./component/contentTitle";
 
-
 function App() {
   return (
     <div>
