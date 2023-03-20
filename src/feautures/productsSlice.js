@@ -3,9 +3,7 @@ import axios from "axios";
 
 const initialState = {
   favoriteItems: [],
-  isShowFavorite: false,
-  slicedItems: [],
-  favoriteCount: 0,
+  isShowFav: false,
   items: [],
   status: "",
   error: null,
@@ -30,6 +28,9 @@ export const ProductsSlice = createSlice({
     favorite: (state, action) => {
       state.favoriteItems = action.payload;
     },
+    showFavorites: (state,action) => {
+      state.isShowFav = action.payload
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -46,5 +47,5 @@ export const ProductsSlice = createSlice({
       });
   },
 });
-export const { favorite } = ProductsSlice.actions;
+export const { favorite, showFavorites } = ProductsSlice.actions;
 export default ProductsSlice.reducer;

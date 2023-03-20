@@ -5,10 +5,13 @@ import { useSelector, useDispatch } from "react-redux";
 import { getProducts, favorite } from "../feautures/productsSlice";
 
 const ProductCard = () => {
+  const allProducts = useSelector((state) => state.productsSlice.items);
   const favoriteItems = useSelector((state) => state.productsSlice.favoriteItems);
   const [products, setProducts] = useState([]);
   const dispatch = useDispatch();
-
+  const isShowFav = useSelector(
+    (state) => state.productsSlice.isShowFav
+  );
   useEffect(() => {
     dispatch(getProducts())
       .then((response) => {
@@ -18,7 +21,13 @@ const ProductCard = () => {
         console.log(error);
       });
   }, [dispatch]);
-
+  useEffect(() => {
+    if (isShowFav) {
+      setProducts(allProducts.filter((product) => favoriteItems.includes(product.id)));
+    } else {
+      setProducts(allProducts);
+    }
+  }, [allProducts, favoriteItems, isShowFav]);
   const handleLike = (product) => {
     if (!favoriteItems.includes(product.id)) {
       dispatch(favorite([...favoriteItems, product.id]));
@@ -27,7 +36,7 @@ const ProductCard = () => {
     }
   };
 
-
+console.log("sadşkasşdk",isShowFav)
   return (
     <div className="row justify-content-center">
       <div className="col-12 col-lg-10">
