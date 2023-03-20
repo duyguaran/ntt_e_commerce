@@ -36,13 +36,16 @@ const ProductCard = () => {
     }
   };
 
-console.log("sadşkasşdk",isShowFav)
+  const directUrl = (product) => {
+    window.location.href = "https://www.google.com";
+  };
+
   return (
     <div className="row justify-content-center">
       <div className="col-12 col-lg-10">
         <div className="row">
           {products.map((product) => (
-            <div className="col-md-3 mb-5" key={product.id}>
+            <div className="col-md-3 mb-5" key={product.id}onClick={() => directUrl(product)}>
               <div className="card h-100" style={{ width: "18rem", height: "20rem" }}>
                 <div
                   style={{
