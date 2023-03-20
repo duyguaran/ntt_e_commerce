@@ -2,8 +2,12 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
 const initialState = {
+  favoriteItems: [],
+  isShowFavorite: false,
+  slicedItems: [],
+  favoriteCount: 0,
   items: [],
-  status: "idle",
+  status: "",
   error: null,
 };
 
@@ -22,7 +26,11 @@ export const getProducts = createAsyncThunk("getProducts", async () => {
 export const ProductsSlice = createSlice({
   name: "products",
   initialState,
-  reducers: {},
+  reducers: {
+    favorite: (state, action) => {
+      state.favoriteItems = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(getProducts.pending, (state) => {
@@ -38,5 +46,5 @@ export const ProductsSlice = createSlice({
       });
   },
 });
-
+export const { favorite } = ProductsSlice.actions;
 export default ProductsSlice.reducer;

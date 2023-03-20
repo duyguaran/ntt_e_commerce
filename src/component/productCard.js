@@ -2,12 +2,11 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { FaHeart } from "react-icons/fa";
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getProducts } from "../feautures/productsSlice";
-
+import { getProducts, favorite } from "../feautures/productsSlice";
 
 const ProductCard = () => {
+  const favoriteItems = useSelector((state) => state.productsSlice.favoriteItems);
   const [products, setProducts] = useState([]);
-  const [likedProducts, setLikedProducts] = useState([]);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -20,30 +19,28 @@ const ProductCard = () => {
       });
   }, [dispatch]);
 
-  const handleLike = (id) => {
-    if (!likedProducts.includes(id)) {
-      setLikedProducts([...likedProducts, id]);
+  const handleLike = (product) => {
+    if (!favoriteItems.includes(product.id)) {
+      dispatch(favorite([...favoriteItems, product.id]));
     } else {
-      setLikedProducts(likedProducts.filter((likedId) => likedId !== id));
+      dispatch(favorite(favoriteItems.filter((likedId) => likedId !== product.id))); 
     }
   };
+
 
   return (
     <div className="row">
       {products.map((product) => (
         <div className="col-md-3 mb-5" key={product.id}>
-          <div
-            className="card h-100"
-            style={{ width: "18rem", height: "20rem" }}
-          >
+          <div className="card h-100" style={{ width: "18rem", height: "20rem" }}>
             <div
               style={{
                 position: "absolute",
                 top: 10,
                 right: 10,
-                color: likedProducts.includes(product.id) ? "red" : "white",
+                color: favoriteItems.includes(product.id) ? "red" : "white",
               }}
-              onClick={() => handleLike(product.id)}
+              onClick={() => handleLike(product)}
             >
               <FaHeart size={20} />
             </div>
